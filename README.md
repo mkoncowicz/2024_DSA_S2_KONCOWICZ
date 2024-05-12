@@ -1,0 +1,2 @@
+# PhotoSphere
+Photo management system

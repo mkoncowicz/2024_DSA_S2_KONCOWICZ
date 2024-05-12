@@ -1,0 +1,31 @@
+<div class="style">
+  <main class="auth-container">
+    <section class="form-wrapper">
+      <h1 class="welcome-title">Welcome to PhotoSphere!</h1>
+      <form class="auth-form" #logInForm="ngForm" (ngSubmit)="logIn(logInForm)">
+        <div class="form-group">
+          <label for="email" class="sr-only">Email:</label>
+          <input type="email" id="email" class="form-control" aria-label="Email"  name="email" ngModel required><!--[(ngModel)]="email" -->
+        </div>
+        <div class="form-group">
+          <label for="password" class="sr-only">Password:</label>
+          <input type="password" id="password" class="form-control" aria-label="Password"  name="password" ngModel required><!--[(ngModel)]="password" -->
+        </div>
+        <!--      <button routerLink="/PopularPhotosPage" type="submit" class="submit-btn" tabindex="0">Log in</button>-->
+        <button class="submit-btn" tabindex="0" type="submit" [disabled]="logInForm.invalid">Log in</button>
+      </form>
+      <div class="separator">OR</div>
+      <button class="social-login" (click)="handleGoogleLogin()" tabindex="0">
+        <img src="assets/icons/google-logo.png" alt="Log in with Google" class="social-icon">
+        Log in with Google
+      </button>
+      <div class="alternative-option">
+        Do you not have an account yet?
+        <a routerLink="/registration" class="sign-in-link">Register</a>
+      </div>
+    </section>
+  </main>
+
+</div>
+
+

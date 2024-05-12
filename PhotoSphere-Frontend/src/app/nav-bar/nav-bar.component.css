@@ -1,0 +1,50 @@
+
+.navigation {
+  display: flex;
+  justify-content: center; /* This will center the navigation items horizontally */
+  align-items: center;
+  width: 100%; /* Ensure it takes full width */
+}
+
+.nav-list {
+  background-color: rgba(216, 190, 249, 0.4);
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  list-style-type: none;
+  margin: 0;
+  width: 100%; /* Ensure it takes full width */
+  align-items: center;
+
+  gap: 20px;
+}
+
+.nav-item {
+  font-size: 24px;
+  color: #000;
+  font-weight: 500;
+  background-color: #7d47ac;
+  border-radius: 50px;
+  padding: 20px 40px;
+  border: none;
+  cursor: pointer;
+}
+.nav-item.search {
+  font-family: Inter, sans-serif;
+  border-radius: 50px;
+  background-color: #fff;
+  color: #000;
+  align-self: stretch;
+  padding: 15px 40px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+@media (max-width: 991px) {
+  .main-header {
+    padding: 10px;
+  }
+  .nav-item {
+    white-space: initial;
+    padding: 10px 20px;
+  }
+}

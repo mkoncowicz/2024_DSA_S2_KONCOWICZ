@@ -1,0 +1,27 @@
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+}
+
+.user-details {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: #fff;
+}
+
+.user-details h2, .user-details p {
+  color: #333;
+  margin: 10px 0;
+}
+
+.user-details p span {
+  color: #6d5eac;
+}

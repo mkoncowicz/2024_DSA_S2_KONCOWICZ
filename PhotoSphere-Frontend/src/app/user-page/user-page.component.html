@@ -1,0 +1,9 @@
+<div *ngIf="user$ | async as user">
+  <div class="user-details">
+    <h2>User Details</h2>
+    <p><span>First Name:</span> {{ user.firstName }}</p>
+    <p><span>Last Name:</span> {{ user.lastName }}</p>
+    <p><span>Email:</span> {{ user.email }}</p>
+<!--    <p><span>Day of Birth:</span> {{ user.dayOfBirth ? (user.dayOfBirth | date) : 'N/A' }}</p>-->
+  </div>
+</div>
