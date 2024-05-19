@@ -1,0 +1,41 @@
+# Database Configuration
+# To connect your own database, create a file named application-local.yaml,
+# provide your database details there. In ProjectflowApplication, you can change the profile to "local"
+# to use the configurations from application-local.yaml. Be cautious not to commit sensitive data to GitHub.
+# It is recommended to use separate files like application-[profile].properties and the "local" profile for enhanced security.
+# You can also change profiles through the "Run/Debug Configuration" in your IDE.
+# By default, username for Postgres is postgres
+
+# To run database locally:
+# use command: docker run --name some-postgres -e POSTGRES_PASSWORD={{password}} -e POSTGRES_DB={{database}} -p 5432:5432 -d postgres
+# create file: application-local.yaml and configure all properties which are shown in application.properties
+# application will create table with sample data at each start of the software
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:{XXXX}/{database}
+    username: {{username}}
+    password: {{password}}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+#cloud:
+#  aws:
+#    s3:
+#      endpoint: http://localhost:{{YYYY}}
+#      path-style-access: true
+#    credentials:
+#      access-key: {{minio-username}}
+#      secret-key: {{minio-password}}
+#    region:
+#      static: {{region}}

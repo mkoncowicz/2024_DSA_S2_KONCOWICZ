@@ -1,3 +1,52 @@
 <header class="menu-bar">
   <app-nav-bar></app-nav-bar>
 </header>
+<div class="style">
+  <main class="photo-container">
+    <section class="photo-header">
+      <div class="new-photo-container">
+        <header class="new-photo-header">
+          <div class="new-photo-placeholder" is="photo-placeholder">
+            <p *ngIf="!selectedPhoto">Choose a photo you want to upload</p>
+            <img *ngIf="selectedPhoto" [src]="selectedPhoto" alt="Selected Photo" class="photo-preview">
+          </div>
+          <input type="file" id="upload-photo" (change)="onFileSelected($event)" class="upload-input">
+          <button class="upload-button" (click)="triggerFileInput()">UPLOAD PHOTO</button>
+          <label class="label-privacy">Do you want everyone to see your photo?</label>
+        </header>
+      </div>
+
+      <form class="add-photo-form" #addPhotoForm="ngForm" (ngSubmit)="onCreatePost(addPhotoForm)">
+        <div class="form-group">
+          <label for="title" class="label-name">Title</label>
+          <input type="text" id="title" name="Title" class="input-field" />
+        </div>
+        <div class="form-group">
+          <label for="description" class="label-name">Description</label>
+          <textarea id="description" name="description" class="description-field"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="category" class="label-name">Category</label>
+          <input type="text" id="category" name="category" class="input-field" />
+        </div>
+        <div class="form-group">
+          <label for="tags" class="label-name">Tags</label>
+          <input type="text" id="tags" name="tags" class="input-field" />
+        </div>
+        <div class="form-group visibility-options">
+          <div class="visibility-inputs">
+            <label for="private" class="visibility-label">
+              <input type="checkbox" id="private" name="visibility" value="private" (change)="checkOnly($event)"/>
+              Private
+            </label>
+            <label for="public" class="visibility-label">
+              <input type="checkbox" id="public" name="visibility" value="public" (change)="checkOnly($event)"/>
+              Public
+            </label>
+          </div>
+        </div>
+      </form>
+    </section>
+    <button type="submit" class="create-button" (click)="onCreatePost(addPhotoForm)">CREATE YOUR POST!</button>
+  </main>
+</div>

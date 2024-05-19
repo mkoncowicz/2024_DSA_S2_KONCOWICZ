@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {CommonModule} from "@angular/common";
+import {AuthService} from "../services/auth.service";
+
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,7 +13,7 @@ import {CommonModule} from "@angular/common";
 })
 export class NavBarComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, public authService: AuthService) {}
 
 
   onNavItemClick(item: string): void {
@@ -20,7 +22,7 @@ export class NavBarComponent {
       this.router.navigate(['/PopularPhotoPage'])
     }
     if(item == 'New'){
-      this.router.navigate(['/NewPhotoPage'])
+      this.router.navigate(['/NewPhotosPage'])
     }
     if(item == 'Create'){
       this.router.navigate(['/AddNewPhoto'])
@@ -28,6 +30,8 @@ export class NavBarComponent {
     if(item == 'Account'){
       this.router.navigate(['/ProfilePage'])
     }
-
+  }
+  logOut(): void {
+    this.authService.logOut();
   }
 }

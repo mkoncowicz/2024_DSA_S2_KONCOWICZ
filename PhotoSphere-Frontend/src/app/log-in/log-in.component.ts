@@ -26,14 +26,8 @@ export class LogInComponent {
     this.authService.logIn(logInForm.value.email, logInForm.value.password);
   }
 
-  handleSubmit(event: Event): void {
-    event.preventDefault();
-    console.log('Submitting:', { email: this.email, password: this.password });
-    // Implement submit logic here
-  }
-
   handleGoogleLogin(): void {
     console.log('Google Login initiated');
-    // Implement the Google login logic here
+    this.authService.googleLogin();
   }
 }

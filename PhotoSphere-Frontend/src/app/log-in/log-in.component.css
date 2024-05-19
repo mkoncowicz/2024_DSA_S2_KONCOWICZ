@@ -5,6 +5,7 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
+  background-size: cover;
 }
 
 .auth-container {
@@ -20,8 +21,8 @@
   color: #000;
   font-weight: 500;
   padding: 50px 0 30px;
-  max-width: 550px;
-  margin: auto;
+  max-width: 600px;
+  margin: 50px auto;
 }
 
 .form-wrapper {
@@ -33,15 +34,15 @@
 }
 
 .welcome-title {
-  font: 800 40px Inter, sans-serif;
-  margin-bottom: 20px;
+  font: 800 50px Inter, sans-serif;
+  margin-bottom: 40px;
   text-align: center;
 
 }
 
 .form-group {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .form-control {
@@ -71,7 +72,7 @@
 }
 
 .separator {
-  margin: 28px 0;
+  margin: 30px 0;
   font-size: 24px;
 }
 
@@ -82,7 +83,8 @@
 }
 
 .alternative-option {
-  font-size: 20px;
+  font-size: 22px;
+  margin-top: 15px;
 }
 
 .sign-in-link {

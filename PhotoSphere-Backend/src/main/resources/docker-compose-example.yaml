@@ -1,0 +1,34 @@
+# In resources directory run command: docker-compose up -d to run all containers
+# In resources directory run command: docker-compose down to stop all containers
+# On URL localhost:ZZZZ you will find minIO console. You are able to create bucket here to store your files.
+
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: {{postgres-container-name}}
+    environment:
+      - POSTGRES_PASSWORD={{postgres-database-password}}
+      - POSTGRES_DB={{postgres-database-name}}
+    ports:
+      - {{XXXX:XXXX}}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  minio:
+    image: minio/minio
+    container_name: {{minio-container-name}}
+    environment:
+      - MINIO_ROOT_USER={{minio-username}}
+      - MINIO_ROOT_PASSWORD={{minio-password}}
+    ports:
+      - {{YYYY:YYYY}}
+      - {{ZZZZ:ZZZZ}}
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":ZZZZ"
+
+volumes:
+  db_data:
+  minio_data:

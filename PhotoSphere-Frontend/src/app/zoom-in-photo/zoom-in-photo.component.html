@@ -1,1 +1,66 @@
-<p>zoom-in-photo works!</p>
+<header class="menu-bar">
+  <app-nav-bar></app-nav-bar>
+</header>
+<div class="style">
+  <main class="photo-container">
+    <section class="photo-header">
+      <div class="zoom-photo-container">
+        <div class="zoom-photo">
+          <ng-container *ngIf="selectedPhoto; else placeholder">
+            <img [src]="selectedPhoto" alt="Zoomed Photo" class="photo-preview">
+          </ng-container>
+          <ng-template #placeholder>
+            <div class="photo-placeholder">No Image Available</div>
+          </ng-template>
+          <div class="photo-interactions">
+            <span>Comments: 5</span>
+            <div class="interaction-item">
+              <img [src]="likeIconSrc" alt="Like Icon" class="interaction-icon">
+              <span>16</span>
+            </div>
+            <div class="interaction-item">
+              <img [src]="dislikeIconSrc" alt="Dislike Icon" class="interaction-icon">
+              <span>16</span>
+            </div>
+            <div class="interaction-item">
+              <img [src]="funnyIconSrc" alt="Funny Icon" class="interaction-icon">
+              <span>16</span>
+            </div>
+            <div class="interaction-item">
+              <img [src]="sadIconSrc" alt="Sad Icon" class="interaction-icon">
+              <span>16</span>
+            </div>
+            <div class="interaction-item">
+              <img [src]="shockedIconSrc" alt="Shocked Icon" class="interaction-icon">
+              <span>16</span>
+            </div>
+          </div>
+        </div>
+        <main class="photo-info">
+          <div class="creator-info">
+            <span class="creator-username">Creator username</span>
+            <img src="assets/icons/profile_image_test.jpg" alt="Creator" class="creator-photo">
+          </div>
+          <div class="photo-details">
+            <h2 class="photo-title">Title</h2>
+            <p class="photo-description">Description</p>
+          </div>
+          <div class="visibility-options">
+            <label for="private" class="visibility-label">
+              <input type="checkbox" id="private" name="visibility" value="private" (change)="checkOnly($event)"/>
+              Private
+            </label>
+            <label for="public" class="visibility-label">
+              <input type="checkbox" id="public" name="visibility" value="public" (change)="checkOnly($event)"/>
+              Public
+            </label>
+          </div>
+        </main>
+      </div>
+    </section>
+    <div class="button-container">
+      <button type="submit" class="save-button" (click)="onItemClick('Edit')">EDIT PHOTO</button>
+      <button class="save-button delete" tabindex="0" (click)="onItemClick('Save')">SAVE ON DEVICE</button>
+    </div>
+  </main>
+</div>

@@ -1,12 +1,22 @@
-INSERT INTO "users" ("username", "first_name", "last_name", "email", "password", "gender", "day_of_birth")
+INSERT INTO users (username, first_name, last_name, email, password, gender, day_of_birth)
 VALUES
-    ('user_1', 'John', 'Doe', 'user1@example.com', 'password123', 'Male', '1990-01-01'),
-    ('user_2', 'Jane', 'Smith', 'user2@example.com', 'password123', 'Female', '1992-02-02'),
-    ('user_3', 'Michael', 'Johnson', 'user3@example.com', 'password123', 'Male', '1993-03-03'),
-    ('user_4', 'Emily', 'Williams', 'user4@example.com', 'password123', 'Female', '1994-04-04'),
-    ('user_5', 'Daniel', 'Brown', 'user5@example.com', 'password123', 'Male', '1995-05-05'),
-    ('user_6', 'Olivia', 'Jones', 'user6@example.com', 'password123', 'Female', '1996-06-06'),
-    ('user_7', 'Liam', 'Davis', 'user7@example.com', 'password123', 'Male', '1997-07-07'),
-    ('user_8', 'Sophia', 'Garcia', 'user8@example.com', 'password123', 'Female', '1998-08-08'),
-    ('user_9', 'James', 'Martinez', 'user9@example.com', 'password123', 'Male', '1999-09-09'),
-    ('user_10', 'Ava', 'Rodriguez', 'user10@example.com', 'password123', 'Female', '2000-10-10');
+    ('CrazyJohnny', 'John', 'Doe', 'JohnDoe12@gmail.com', 'HardPASSword123', 'Male', '2001-01-01'),
+    ('JustJane777', 'Jane', 'Smith', 'janejanejane@yahoo.com', '777enajtsuj', 'Female', '1992-10-02'),
+    ('placeholder3', 'Michael', 'Johnson', 'placeholder3@gmail.com', 'Michael9090', 'Male', '2005-03-10'),
+    ('ksjcnjfiuowurjh', 'Emily', 'Williams', 'Emilly.Williams@icloud.com', 'sfwegset342@dew', 'Female', '1994-04-01'),
+    ('TooHotToHandle', 'Daniel', 'Brown', 'WhooperMAXXX@yahoo.com', 'Daniel0505', 'Male', '1995-05-05'),
+    ('SpeedyGonzales', 'Gonzales', 'Rodriguez', 'speedy@gmail.com', 'speedy123', 'Male', '1996-01-06'),
+    ('MissyMiss', 'Melissa', 'Garcia', 'missymiss@hotmail.com', 'hello123', 'Female', '1997-07-08'),
+    ('RockingRobin', 'Robert', 'Robinson', 'rockinrobin@yahoo.com', 'robinrocks', 'Male', '1998-08-04'),
+    ('DancingQueen', 'Olivia', 'Martinez', 'dancequeen@gmail.com', 'dancing321', 'Female', '1999-09-01'),
+    ('StarryNight', 'Vincent', 'Van Gogh', 'starrynight@yahoo.com', 'vangogh1888', 'Male', '2000-04-10'),
+    ('FancyPants', 'Frank', 'White', 'fancypants@icloud.com', 'password123', 'Male', '1988-08-04'),
+    ('ShiningStar', 'Samantha', 'Johnson', 'shiningstar@icloud.com', 'starshine123', 'Female', '1986-04-06'),
+    ('MightyMouse', 'Mark', 'Taylor', 'mightymouse@yahoo.com', 'mousepower123', 'Male', '1984-04-04'),
+    ('SparklingSoul', 'Sara', 'Anderson', 'sparklingsoul@yahoo.com', 'soulsparkle123', 'Female', '1982-10-02'),
+    ('GoldenHeart', 'Gary', 'Brown', 'goldenheart@gmail.com', 'heartofgold123', 'Male', '1989-10-08'),
+    ('SilverLining', 'Samantha', 'White', 'silverlining@icloud.com', 'silver123', 'Female', '1978-10-08'),
+    ('RockStar', 'Robert', 'Johnson', 'rockstar@outlook.com', 'rockon123', 'Male', '1996-08-10'),
+    ('DivaQueen', 'Danielle', 'Davis', 'divaqueen@outlook.com', 'divadiva444', 'Female', '1974-04-10'),
+    ('TechieGuy', 'Thomas', 'Taylor', 'techieguy@outlook.com', 'tech87281', 'Male', '2009-10-02'),
+    ('Fashionista', 'Fiona', 'Fisher', 'fashionista@outlook.com', 'fashion000', 'Female', '1971-04-08');

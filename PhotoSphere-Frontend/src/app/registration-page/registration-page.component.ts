@@ -4,6 +4,7 @@ import {UserService} from "../services/user.service";
 import {RouterLink, RouterOutlet, Router} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NgForm} from "@angular/forms";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -23,7 +24,7 @@ export class RegistrationPageComponent {
   user: User = this.userService.blankUser;
   gender: string[] = ["Male", "Female", "Other"];
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private authService: AuthService) {
   }
 
   private getDateAsArray(dateString: string): number[] {
@@ -56,7 +57,7 @@ export class RegistrationPageComponent {
 
   handleGoogleLogin(): void {
     console.log('Google Login initiated');
-    // Implement the Google login logic here
+    this.authService.googleLogin();
   }
 }
 

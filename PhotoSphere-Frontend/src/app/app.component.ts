@@ -9,7 +9,7 @@ import {PopularPhotoPageComponent} from "./popular-photo-page/popular-photo-page
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, RegistrationPageComponent, LogInComponent],
+  imports: [RouterOutlet, CommonModule, RegistrationPageComponent, LogInComponent, PopularPhotoPageComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

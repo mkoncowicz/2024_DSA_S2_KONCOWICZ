@@ -1,3 +1,54 @@
 <header class="menu-bar">
   <app-nav-bar></app-nav-bar>
 </header>
+<section class="profile-section">
+  <main class = "content">
+    <section class="profile-navigation">
+      <div class="profile-nav-bar-item">
+        <button class="navigation-button public-posts"  (click)="onNavButtonClick('Public')">Public posts</button>
+        <button class="navigation-button private-posts" (click)="onNavButtonClick('Private')">Private posts</button>
+      </div>
+    </section>
+    <div class = "profile-center">
+      <div class="profile-image">
+        <img src="assets/icons/profile_image_test.jpg" alt="Profile image" class="profile-image-element" />
+      </div>
+    </div>
+    <section class="profile-navigation">
+      <div class = "profile-nav-bar-item">
+        <button class="navigation-button saved" (click)="onNavButtonClick('Saved')">Saved</button>
+        <button class="navigation-button edit-profile" (click)="onNavButtonClick('Edit')">Edit profile</button>
+      </div>
+    </section>
+  </main>
+  <header class="profile-info">
+    <h2 class="username">Username</h2>
+    <p class="profile-description">Profile description</p>
+  </header>
+  <section class="filter-section">
+    <div class="filter-nav">
+      <div class="filter-label">
+        <header class="filter-header">Filter</header>
+        <button (click)="onFilterClick()" class="filter-button">
+          <img src="{{filterIconSrc}}" alt="Filter" class="filter-icon"/>
+        </button>
+      </div>
+      <h2 class="filter-name">{{ filterName }}</h2>
+    </div>
+  </section>
+  <main class="content-wrapper">
+    <article (click)="onImageArticleClick(imageSrc)" class="image-article">
+<!--      <div class="article-image placeholder"></div>-->
+      <img src="{{imageSrc}}" alt="Scenic view" class="article-image"/>
+    </article>
+    <article (click)="onImageArticleClick('')" class="image-article">
+      <div class="article-image placeholder"></div>
+<!--      <img src="{{imageSrc}}" alt="Scenic view" class="article-image"/>-->
+    </article>
+    <article (click)="onImageArticleClick('')" class="image-article">
+      <div class="article-image placeholder"></div>
+<!--      <img src="{{imageSrc}}" alt="Scenic view" class="article-image"/>-->
+    </article>
+  </main>
+</section>
+

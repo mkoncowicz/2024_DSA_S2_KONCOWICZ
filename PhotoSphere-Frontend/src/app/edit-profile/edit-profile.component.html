@@ -1,1 +1,40 @@
-<p>edit-profile works!</p>
+<header class="menu-bar">
+  <app-nav-bar></app-nav-bar>
+</header>
+<div class="style">
+  <main class="profile-container">
+    <section class="profile-header">
+      <div class="profile-photo-container">
+        <header class="profile-photo-header">
+          <div class="profile-photo-placeholder">
+            <p *ngIf="!selectedPhoto">Profile photo</p>
+            <img *ngIf="selectedPhoto" [src]="selectedPhoto" alt="Selected Photo" class="photo-preview">
+          </div>
+          <label class="upload-label" for="upload-photo">Choose new profile photo:</label>
+          <input type="file" id="upload-photo" (change)="onFileSelected($event)" class="upload-input">
+          <button class="upload-button" (click)="triggerFileInput()">UPLOAD PHOTO</button>
+        </header>
+      </div>
+
+      <form class="profile-edit-form" #profileEditForm="ngForm" (ngSubmit)="onSave(profileEditForm)">
+        <div class="form-group">
+          <label for="firstName" class="label-name">First name</label>
+          <input type="text" id="firstName" [(ngModel)]="user.firstName" placeholder="first name" name="firstName" class="input-field" />
+        </div>
+        <div class="form-group">
+          <label for="lastName" class="label-name">Last name</label>
+          <input type="text" id="lastName" [(ngModel)]="user.lastName" placeholder="last name"name="lastName" class="input-field" />
+        </div>
+        <div class="form-group">
+          <label for="username" class="label-name">Username</label>
+          <input type="text" id="username" [(ngModel)]="user.username" placeholder="username"name="username" class="input-field" />
+        </div>
+        <div class="form-group">
+          <label for="description" class="label-name">Profile description</label>
+          <textarea id="description" formControlName="description" placeholder="description" class="description-field"></textarea>
+        </div>
+      </form>
+    </section>
+    <button type="submit" class="save-button" (click)="onSave(profileEditForm)">SAVE</button>
+  </main>
+</div>
