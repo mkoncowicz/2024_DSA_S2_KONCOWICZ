@@ -7,7 +7,7 @@ import {User} from "../models/user.model";
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8080/users';
+  private apiUrl = 'http://localhost:8080/api/users';
 
   constructor(private http: HttpClient) {}
 
@@ -41,6 +41,11 @@ export class UserService {
     }
 
     return this.http.delete(`${this.apiUrl}/${userId}`)
+  }
+
+  downloadUserImage(userId: number): Observable<Blob> {
+    const url = `${this.apiUrl}/${userId}/download-image`;
+    return this.http.get(url, { responseType: 'blob' });
   }
 
   blankUser : User = {
