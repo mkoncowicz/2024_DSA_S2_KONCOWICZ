@@ -15,10 +15,6 @@
         <button class="submit-btn" tabindex="0" type="submit" [disabled]="logInForm.invalid">Log in</button>
       </form>
       <div class="separator">OR</div>
-      <button class="social-login" (click)="handleGoogleLogin()" tabindex="0">
-        <img src="assets/icons/google-logo.png" alt="Log in with Google" class="social-icon">
-        Log in with Google
-      </button>
       <div class="alternative-option">
         Do you not have an account yet?
         <a routerLink="/registration" class="sign-in-link">Register</a>

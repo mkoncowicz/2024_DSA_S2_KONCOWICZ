@@ -4,8 +4,10 @@ import {UserService} from "./user.service";
 import {catchError, map, Observable, of} from "rxjs";
 import {Router} from "@angular/router";
 import {User} from "../models/user.model";
-import {AuthConfig, OAuthService} from "angular-oauth2-oidc";
-
+import {AuthenticationRequest} from "../models/authentication-request";
+import {AuthenticationService} from "../open-api-services/services/authentication.service";
+import {TokenService} from "../open-api-services/token/token.service";
+import {RegistrationRequest} from "../open-api-services/models/registration-request";
 
 @Injectable({
   providedIn: 'root',
@@ -13,71 +15,67 @@ import {AuthConfig, OAuthService} from "angular-oauth2-oidc";
 export class AuthService {
   public isLoggedIn: boolean = false;
   public loggedUser: User = this.userService.blankUser;
-  errorMessage: string = "";
 
-  constructor(private userService: UserService, private router: Router, private oAuthService: OAuthService) {
-    this.initConfiguration();
+
+  errorMsg: Array<string> = [];
+  authRequest: AuthenticationRequest = {email: '', password: ''};
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private authService: AuthenticationService,
+    private tokenService: TokenService
+  ) {
   }
-
-  initConfiguration(){
-    const authConfig: AuthConfig ={
-      issuer: 'https://accounts.google.com',
-      strictDiscoveryDocumentValidation: false,
-      clientId: '1000659349717-m312artpd9ak2dj45u39pq3rbs08s2mk.apps.googleusercontent.com',
-      redirectUri: window.location.origin + '/PopularPhotoPage',
-      scope: 'openid profile email',
-    };
-
-    this.oAuthService.configure(authConfig);
-    this.oAuthService.setupAutomaticSilentRefresh();
-    this.oAuthService.loadDiscoveryDocumentAndTryLogin();
-  }
-
-  googleLogin(){
-    this.oAuthService.initImplicitFlow();
-  }
-
-  googleLogOut(){
-    this.oAuthService.revokeTokenAndLogout();
-    this.oAuthService.logOut();
-  }
-
-  googleGetProfile(){
-    return this.oAuthService.getIdentityClaims();
-  }
-
-  googleGetToken(){
-    return this.oAuthService.getAccessToken();
-  }
-
 
   logIn(email: string, password: string) {
-    this.errorMessage = "";
-    this.userService.getUserByEmail(email).pipe(
-      map((user) => {
-        if (user) {
-          if (password === user.password) {
-            this.loggedUser = user;
-            this.isLoggedIn = true;
-            this.router.navigate(['/PopularPhotoPage']);
-          } else {
-            //console.error('Incorrect password');
-            alert('Incorrect login data');
+    this.authRequest.email = email;
+    this.authRequest.password = password;
+    this.errorMsg = [];
+    this.authService.authenticate({
+      body: this.authRequest
+    }).subscribe({
+      next: (res) => {
+        this.tokenService.token = res.token as string;
+        this.userService.getUserByEmail(email).pipe(
+          map((user) => {
+            if (user) {
+              this.loggedUser = user;
+              this.isLoggedIn = true;
+              this.router.navigate(['/PopularPhotoPage']);
+            } else {
+              alert('User not found');
+            }
+          })
+        ).subscribe({
+          error: (err) => {
+            console.log('Error fetching user:', err);
+            alert('Error fetching user information');
           }
+        });
+      },
+      error: (err) => {
+        console.log('Authentication error:', err);
+        if (err.error && err.error.validationErrors) {
+          this.errorMsg = err.error.validationErrors;
+        } else if (err.error && err.error.errorMsg) {
+          this.errorMsg.push(err.error.errorMsg);
         } else {
-          //console.error('User not found');
-          alert('User not found');
+          this.errorMsg.push('An unknown error occurred during authentication.');
         }
-      }),
-      catchError((error) => {
-        //console.error('Error fetching user:', error);
-        alert('Error fetching user');
-        return of(null);
-      })
-    ).subscribe();
+      }
+    });
   }
 
   logOut() {
     this.isLoggedIn = false;
+    localStorage.removeItem('token');
+    this.loggedUser = this.userService.blankUser;
+    this.router.navigate(['/logging']);
   }
+
 }
+
+
+
+
+

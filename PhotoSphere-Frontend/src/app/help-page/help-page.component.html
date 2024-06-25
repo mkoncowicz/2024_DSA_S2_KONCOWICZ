@@ -1,0 +1,14 @@
+<header class="menu-bar">
+  <app-nav-bar></app-nav-bar>
+</header>
+<div class="help-container">
+  <h1>Help & FAQ</h1>
+  <div class="faq-item" *ngFor="let faq of faqs">
+    <button class="faq-question" (click)="toggleAnswer(faq)">
+      {{ faq.question }}
+    </button>
+    <div class="faq-answer" *ngIf="faq.showAnswer">
+      <p>{{ faq.answer }}</p>
+    </div>
+  </div>
+</div>

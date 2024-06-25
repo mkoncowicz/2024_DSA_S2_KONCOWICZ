@@ -4,7 +4,8 @@ import {UserService} from "../services/user.service";
 import {RouterLink, RouterOutlet, Router} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NgForm} from "@angular/forms";
-import {AuthService} from "../services/auth.service";
+import {RegistrationRequest} from "../open-api-services/models/registration-request";
+import {AuthenticationService} from "../open-api-services/services/authentication.service";
 
 @Component({
   selector: 'app-register',
@@ -21,43 +22,35 @@ import {AuthService} from "../services/auth.service";
 export class RegistrationPageComponent {
   email: string = '';
   password: string = '';
-  user: User = this.userService.blankUser;
+  //user: User = this.userService.blankUser;
+  errorMsg: Array<string> = [];
   gender: string[] = ["Male", "Female", "Other"];
-
-  constructor(private userService: UserService, private router: Router, private authService: AuthService) {
+  registerRequest: RegistrationRequest = {
+    dayOfBirth: '',
+    email: '',
+    firstName: '',
+    gender: '',
+    lastName: '',
+    password: '',
+    nickname: ''
+  };
+  constructor(private userService: UserService, private router: Router, private authService: AuthenticationService) {
   }
 
-  private getDateAsArray(dateString: string): number[] {
-    const parts = dateString.split('-').map(part => parseInt(part, 10));
-    return parts; // parts will be an array like [year, month, day]
-  }
+
 
   signUp(signUpForm: NgForm) {
-    console.log(signUpForm.value.dayOfBirth);
-    const dateArray = this.getDateAsArray(signUpForm.value.dayOfBirth);
-    signUpForm.value.dayOfBirth = dateArray;
-    console.log('Date as Array:', dateArray);
-    if (signUpForm.valid) {
-       this.userService.createUser(this.user).subscribe({
-        next: (createdUser) => {
-          console.log('User created successfully:', createdUser);
-          alert('User created successfully');
-          this.router.navigate(['/PopularPhotoPage']);
-          signUpForm.resetForm();
-          this.user = this.userService.blankUser;  // Reset user object to initial state
+    this.errorMsg = [];
+    this.authService.register({
+      body: this.registerRequest
+    })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/logging']);
         },
-        error: (error) => {
-          console.error('Error creating user:', error);
-          alert('Error creating user');
+        error: (err) => {
+          this.errorMsg = err.error.validationErrors;
         }
       });
-    }
-  }
-
-
-  handleGoogleLogin(): void {
-    console.log('Google Login initiated');
-    this.authService.googleLogin();
-  }
 }
-
+}

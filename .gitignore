@@ -1,3 +1,4 @@
 
-PhotoSphere-Backend/src/main/resources/application-local.yaml
+PhotoSphere-Backend/src/main/resources/application-local.properties
 PhotoSphere-Backend/src/main/resources/docker-compose.yaml
+PhotoSphere-Backend/src/main/resources/application-local.yaml

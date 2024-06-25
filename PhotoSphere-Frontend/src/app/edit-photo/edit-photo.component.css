@@ -13,10 +13,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px;
+  padding: 50px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   width: 60%;
   margin: 20px;
+  position: relative;
 }
 
 .photo-header {
@@ -44,7 +45,6 @@
 }
 
 .new-photo-placeholder {
-  background-color: rgba(217, 217, 217, 0.62);
   width: 400px;
   height: 400px;
   display: flex;
@@ -55,8 +55,9 @@
 }
 
 .photo-preview {
-  max-width: 100%;
-  max-height: 100%;
+  background-color: #fff;
+  max-width: 400px;
+  max-height: 400px;
   border-radius: 20px;
 }
 
@@ -65,6 +66,7 @@
   flex-direction: column;
   width: 60%;
   gap: 20px;
+  align-items: center;
 }
 
 .form-group {
@@ -73,6 +75,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .label-name {
@@ -84,11 +87,12 @@
 }
 
 .label-privacy {
-  margin-top: 50px;
+  margin-top: 20px;
   font-size: 18px;
   color: #000000;
   width: 420px;
   text-align: right;
+  margin-bottom: 60px;
 }
 
 .input-field, .description-field {
@@ -96,7 +100,7 @@
   border-radius: 10px;
   border: 1px solid #ccc;
   font-size: 16px;
-  width: 100%;
+  width: calc(100% - 170px);
 }
 
 .description-field {
@@ -105,10 +109,16 @@
 }
 
 .button-container {
+  width: 100%;
   display: flex;
   justify-content: center;
   gap: 50px;
   margin-top: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 0;
 }
 
 .save-button {
@@ -128,7 +138,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 65px;
 }
 
 .visibility-inputs {
@@ -141,7 +151,7 @@
   color: #000;
 }
 
-input[type="checkbox"] {
+input[type="radio"] {
   width: 20px;
   height: 20px;
 }

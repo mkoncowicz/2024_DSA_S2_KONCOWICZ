@@ -10,7 +10,9 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "post_reaction")
+@Table(name = "post_reaction", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"post_id", "user_id"})
+})
 public class PostReaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,11 @@
 package org.example.photospherebackend;
 
+import org.example.photospherebackend.models.Role;
+import org.example.photospherebackend.repositories.RoleRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class PhotoSphereBackendApplication {
@@ -28,6 +32,15 @@ public class PhotoSphereBackendApplication {
 //         Uncomment the following lines to set "local" as an active profile on the application context
 //         ConfigurableApplicationContext context = SpringApplication.run(PhotoSphereBackendApplication.class, args);
 //         context.getEnvironment().setActiveProfiles("local");
+    }
+
+    @Bean
+    public CommandLineRunner runner(RoleRepository roleRepository) {
+        return args -> {
+            if (roleRepository.findByName("USER").isEmpty()) {
+                roleRepository.save(Role.builder().name("USER").build());
+            }
+        };
     }
 
 }

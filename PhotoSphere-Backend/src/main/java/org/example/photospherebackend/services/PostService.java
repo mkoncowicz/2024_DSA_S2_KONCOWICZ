@@ -25,7 +25,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final AmazonS3 amazonS3;
-    private final String bucketName = "photosphere-bucket";
+    private final String bucketName = "photo-test";
 
     @Autowired
     public PostService(PostRepository postRepository, AmazonS3 amazonS3) {
@@ -43,6 +43,10 @@ public class PostService {
 
     public Post createPost(Post post) {
         return postRepository.save(post);
+    }
+
+    public List<String> getAllCategories() {
+        return postRepository.findAllCategories();
     }
 
     public Post updatePost(Post post) {
@@ -126,5 +130,13 @@ public class PostService {
 
     public List<Post> getPostsByUserId(Long userId) {
         return postRepository.findByUserId(userId);
+    }
+
+    public List<Post> getPostsByCategory(String category) {
+        return postRepository.findByCategory(category);
+    }
+
+    public List<String> getDistinctCategoriesByUserId(Long userId) {
+        return postRepository.findDistinctCategoriesByUserId(userId);
     }
 }

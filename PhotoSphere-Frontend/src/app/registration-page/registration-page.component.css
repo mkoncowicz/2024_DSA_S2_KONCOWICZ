@@ -1,14 +1,14 @@
 .style{
   background-image: url("../../assets/icons/background_login_register.jpeg");
-  /*position: absolute;*/
+  position: absolute;
   inset: 0;
   height: 100%;
   width: 100%;
-  /*object-fit: cover;*/
+  object-fit: cover;
 }
 
 .auth-container {
-  border-radius: 30px;
+  border-radius: 20px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(0, 0, 0, 1);
   background-color: #fff;
@@ -19,9 +19,9 @@
   font-size: 24px;
   color: #000;
   font-weight: 500;
-  padding: 50px 0 30px;
-  max-width: 550px;
-  margin: auto;
+  padding: 30px 30px;
+  max-width: fit-content;
+  margin: 10px auto;
 }
 
 .form-wrapper {
@@ -42,12 +42,21 @@
 .form-group {
   width: 100%;
   margin-bottom: 20px;
+  flex-direction: row;
+
+}
+.dual-input {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
 }
 
-#gender{}
+.dual-input > div {
+  flex: 1 1 48%; /* Each takes nearly half the parent width, minus margin */
+}
 
-.form-control {
-  width: 100%;
+.form-control-username {
+  width: 100%; /* Flex width management */
   height: 50px;
   padding: 10px;
   border-radius: 30px;
@@ -56,9 +65,20 @@
   font-size: 20px;
 }
 
-.submit-btn, .social-login {
-  width: 100%;
-  max-width: 450px;
+.form-control {
+  width: 100%; /* Flex width management */
+  height: 50px;
+  padding: 10px;
+  border-radius: 30px;
+  background-color: #d9d9d9;
+  border: none;
+  font-size: 20px;
+}
+#gender{}
+
+
+.submit-btn {
+  width: 80%; /* Match username input width for aesthetic consistency */
   padding: 15px 0;
   border-radius: 30px;
   background-color: #7d47ac;
@@ -66,14 +86,12 @@
   font-size: 24px;
   text-align: center;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  display: block; /* Makes it easier to center */
+  margin: 50px auto 0 auto; /* Center button vertically and horizontally */
 }
 
 .separator {
-  margin: 28px 0;
+  margin: 25px 0;
   font-size: 24px;
 }
 

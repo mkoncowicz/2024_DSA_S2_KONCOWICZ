@@ -18,7 +18,6 @@ import {AuthService} from "../services/auth.service";
 export class LogInComponent {
   email: string = '';
   password: string = '';
-
   constructor(private userService: UserService, private authService: AuthService) {
   }
 
@@ -26,8 +25,4 @@ export class LogInComponent {
     this.authService.logIn(logInForm.value.email, logInForm.value.password);
   }
 
-  handleGoogleLogin(): void {
-    console.log('Google Login initiated');
-    this.authService.googleLogin();
-  }
 }

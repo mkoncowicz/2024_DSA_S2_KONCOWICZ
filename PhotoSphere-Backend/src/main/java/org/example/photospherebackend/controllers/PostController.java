@@ -2,7 +2,7 @@ package org.example.photospherebackend.controllers;
 
 import org.example.photospherebackend.models.AppUser;
 import org.example.photospherebackend.models.Post;
-import org.example.photospherebackend.models.PostDTO;
+import org.example.photospherebackend.DTOs.PostDTO;
 import org.example.photospherebackend.services.AppUserService;
 import org.example.photospherebackend.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.util.ReflectionUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.lang.reflect.Field;
@@ -101,6 +103,10 @@ public class PostController {
             String imageUrl = postService.uploadPostImage(image, id, userId);
             existingPost.get().setImageUrl(imageUrl);
             postService.updatePostImageUrl(id, imageUrl);
+            File file = new File(Objects.requireNonNull(image.getOriginalFilename()));
+            if (file.exists()) {
+                file.delete();
+            }
             return ResponseEntity.ok("Image uploaded successfully: " + imageUrl);
         } else {
             return ResponseEntity.notFound().build();
@@ -138,7 +144,35 @@ public class PostController {
         }
     }
 
-    private PostDTO convertToDTO(Post post) {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Long>> getPostIdsByUserId(@PathVariable Long userId) {
+        List<Post> posts = postService.getPostsByUserId(userId);
+        List<Long> postIds = posts.stream()
+                .map(Post::getId)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(postIds);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<String>> getAllCategories() {
+        List<String> categories = postService.getAllCategories();
+        return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<PostDTO>> getPostsByCategory(@PathVariable String category) {
+        List<Post> posts = postService.getPostsByCategory(category);
+        List<PostDTO> postDTOs = posts.stream().map(this::convertToDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(postDTOs);
+    }
+
+    @GetMapping("/categories/user/{userId}")
+    public ResponseEntity<List<String>> getDistinctCategoriesByUserId(@PathVariable Long userId) {
+        List<String> categories = postService.getDistinctCategoriesByUserId(userId);
+        return ResponseEntity.ok(categories);
+    }
+
+    public PostDTO convertToDTO(Post post) {
         PostDTO postDTO = new PostDTO();
         postDTO.setId(post.getId());
         postDTO.setUserId(post.getUser().getId());
@@ -147,6 +181,7 @@ public class PostController {
         postDTO.setCategory(post.getCategory());
         postDTO.setDescription(post.getDescription());
         postDTO.setPrivate(post.isPrivate());
+        postDTO.setCreatedAt(post.getCreatedAt());
         return postDTO;
     }
 
@@ -158,15 +193,7 @@ public class PostController {
         post.setCategory(postDTO.getCategory());
         post.setDescription(postDTO.getDescription());
         post.setPrivate(postDTO.isPrivate());
+        post.setCreatedAt(postDTO.getCreatedAt());
         return post;
-    }
-
-    @GetMapping("/owner/{userId}")
-    public ResponseEntity<List<Long>> getPostIdsByUserId(@PathVariable Long userId) {
-        List<Post> posts = postService.getPostsByUserId(userId);
-        List<Long> postIds = posts.stream()
-                .map(Post::getId)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(postIds);
     }
 }

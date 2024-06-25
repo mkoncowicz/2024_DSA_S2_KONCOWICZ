@@ -23,9 +23,13 @@
   font-weight: 500;
   background-color: #7d47ac;
   border-radius: 20px;
-  padding: 20px 40px;
+  padding: 15px 30px;
   border: none;
   cursor: pointer;
+}
+
+.nav-item:hover {
+  background-color: #733f9a;
 }
 .nav-item.search {
   font-family: Inter, sans-serif;
@@ -45,4 +49,27 @@
     white-space: initial;
     padding: 10px 20px;
   }
+}
+
+.autocomplete-list {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 200px;
+}
+
+.autocomplete-list li {
+  padding: 8px;
+  cursor: pointer;
+  color: #000;
+
+}
+
+.autocomplete-list li:hover {
+  background-color: #f0f0f0;
 }

@@ -1,6 +1,9 @@
 package org.example.photospherebackend.controllers;
 
+import org.example.photospherebackend.DTOs.AppUserDTO;
+import org.example.photospherebackend.DTOs.CommentDTO;
 import org.example.photospherebackend.models.AppUser;
+import org.example.photospherebackend.models.Comment;
 import org.example.photospherebackend.services.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,11 +13,14 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -28,23 +34,35 @@ public class AppUserController {
     }
 
     @GetMapping
-    public List<AppUser> getAllUsers() {
-        return appUserService.getAllUsers();
+    public List<AppUserDTO> getAllUsers() {
+        List<AppUser> users = appUserService.getAllUsers();
+        return users.stream().map(this::convertToDTO).collect(Collectors.toList());
+
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AppUser> getUserById(@PathVariable Long id) {
+    public ResponseEntity<AppUserDTO> getUserById(@PathVariable Long id) {
         Optional<AppUser> user = appUserService.getUserById(id);
         if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());
+            return ResponseEntity.ok(convertToDTO(user.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/by-email/{email}")
-    public Optional<AppUser> getUserByEmail(@PathVariable String email) {
-        return appUserService.getUserByEmail(email);
+    public ResponseEntity<AppUserDTO> getUserByEmail(@PathVariable String email) {
+        Optional<AppUser> existingUserOpt = appUserService.getUserByEmail(email);
+        if (!existingUserOpt.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        AppUser existingUser = existingUserOpt.get();
+        return ResponseEntity.ok(convertToDTO(existingUser));
+    }
+
+    @GetMapping("/get-id-of-user/{email}")
+    public Optional<Integer> getIdOfUser(@PathVariable String email) {
+        return appUserService.getIdOfUser(email);
     }
 
     @PostMapping
@@ -53,7 +71,7 @@ public class AppUserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AppUser> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<AppUserDTO> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
         Optional<AppUser> existingUserOpt = appUserService.getUserById(id);
         if (!existingUserOpt.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -70,7 +88,7 @@ public class AppUserController {
         });
 
         AppUser updatedUser = appUserService.updateUser(existingUser);
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(convertToDTO(updatedUser));
     }
 
     @DeleteMapping("/{id}")
@@ -93,6 +111,10 @@ public class AppUserController {
             String imageUrl = appUserService.uploadUserImage(image, existingUser.get().getId());
             existingUser.get().setImage(imageUrl);
             appUserService.updateUserImageUrl(id, imageUrl);
+            File file = new File(Objects.requireNonNull(image.getOriginalFilename()));
+            if (file.exists()) {
+                file.delete();
+            }
             return ResponseEntity.ok("Image uploaded successfully: " + imageUrl);
         } else {
             return ResponseEntity.notFound().build();
@@ -128,6 +150,20 @@ public class AppUserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    private AppUserDTO convertToDTO(AppUser user) {
+        AppUserDTO appUserDTO = new AppUserDTO();
+        appUserDTO.setId(user.getId());
+        appUserDTO.setNickname(user.getNickname());
+        appUserDTO.setFirstName(user.getFirstName());
+        appUserDTO.setLastName(user.getLastName());
+        appUserDTO.setEmail(user.getEmail());
+        appUserDTO.setGender(user.getGender());
+        appUserDTO.setDayOfBirth(user.getDayOfBirth());
+        appUserDTO.setDescription(user.getDescription());
+        appUserDTO.setImage(user.getImage());
+        return appUserDTO;
     }
 
 }

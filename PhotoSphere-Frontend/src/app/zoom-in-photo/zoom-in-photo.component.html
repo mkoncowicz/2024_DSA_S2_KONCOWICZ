@@ -13,54 +13,79 @@
             <div class="photo-placeholder">No Image Available</div>
           </ng-template>
           <div class="photo-interactions">
-            <span>Comments: 5</span>
+            <span>Comments: {{commentCount}}</span>
             <div class="interaction-item">
-              <img [src]="likeIconSrc" alt="Like Icon" class="interaction-icon">
-              <span>16</span>
+              <img [src]="likeIconSrc" alt="Like Icon" class="interaction-icon" (click)="addReaction('like')">
+              <span>{{reactionCounts.get('like') || 0}}</span>
             </div>
             <div class="interaction-item">
-              <img [src]="dislikeIconSrc" alt="Dislike Icon" class="interaction-icon">
-              <span>16</span>
+              <img [src]="dislikeIconSrc" alt="Dislike Icon" class="interaction-icon" (click)="addReaction('dislike')">
+              <span>{{reactionCounts.get('dislike') || 0}}</span>
             </div>
             <div class="interaction-item">
-              <img [src]="funnyIconSrc" alt="Funny Icon" class="interaction-icon">
-              <span>16</span>
+              <img [src]="funnyIconSrc" alt="Funny Icon" class="interaction-icon" (click)="addReaction('funny')">
+              <span>{{reactionCounts.get('funny') || 0}}</span>
             </div>
             <div class="interaction-item">
-              <img [src]="sadIconSrc" alt="Sad Icon" class="interaction-icon">
-              <span>16</span>
+              <img [src]="sadIconSrc" alt="Sad Icon" class="interaction-icon" (click)="addReaction('sad')">
+              <span>{{reactionCounts.get('sad') || 0}}</span>
             </div>
             <div class="interaction-item">
-              <img [src]="shockedIconSrc" alt="Shocked Icon" class="interaction-icon">
-              <span>16</span>
+              <img [src]="shockedIconSrc" alt="Shocked Icon" class="interaction-icon" (click)="addReaction('shocked')">
+              <span>{{reactionCounts.get('shocked') || 0}}</span>
             </div>
           </div>
         </div>
         <main class="photo-info">
-          <div class="creator-info">
-            <span class="creator-username">Creator username</span>
-            <img src="assets/icons/profile_image_test.jpg" alt="Creator" class="creator-photo">
+          <div class="creator-info" (click)="navigateToUserProfile(postDetails?.userId)">
+            <span class="creator-username">{{ creatorUsername }}</span>
+            <img [src]="creatorImageUrl" alt="Creator" class="creator-photo">
           </div>
           <div class="photo-details">
-            <h2 class="photo-title">Title</h2>
-            <p class="photo-description">Description</p>
-          </div>
-          <div class="visibility-options">
-            <label for="private" class="visibility-label">
-              <input type="checkbox" id="private" name="visibility" value="private" (change)="checkOnly($event)"/>
-              Private
-            </label>
-            <label for="public" class="visibility-label">
-              <input type="checkbox" id="public" name="visibility" value="public" (change)="checkOnly($event)"/>
-              Public
-            </label>
+            <h2 class="photo-title">{{ postDetails?.caption }}</h2>
+            <p class="photo-description">{{ postDetails?.description }}</p>
           </div>
         </main>
       </div>
     </section>
     <div class="button-container">
-      <button type="submit" class="save-button" (click)="onItemClick('Edit')">EDIT PHOTO</button>
+      <button *ngIf="isCurrentUserOwner" type="submit" class="save-button" (click)="onItemClick('Edit')">EDIT PHOTO</button>
       <button class="save-button delete" tabindex="0" (click)="onItemClick('Save')">SAVE ON DEVICE</button>
     </div>
+  </main>
+  <main class="comments-container">
+    <div class="comment-label">
+      <label class="label-comments">Comments</label>
+    </div>
+    <section class="comment-section">
+      <div class="comment" *ngFor="let comment of comments; let i = index">
+        <div class="comment-content">
+          <span class="username" (click)="navigateToUserProfile(comment.userId)">{{ comment.nickname }}:</span>
+          <span class="comment-text">{{ comment.text }}</span>
+          <img *ngIf="comment.userId === this.authService.loggedUser.id" [src]="binIconSrc" alt="Delete" class="bin-icon" (click)="onDeleteComment(i)">
+        </div>
+        <div class="comment-actions">
+          <span class="action-icons">
+            <img [src]="likeIconSrc" alt="Like Icon" class="interaction-icon" (click)="addCommentReaction(comment.id, 'like')">
+            <span class="comment-like-count">{{commentReactionCounts.get(comment.id)?.get('like') || 0}}</span>
+            <img [src]="dislikeIconSrc" alt="Dislike Icon" class="interaction-icon" (click)="addCommentReaction(comment.id, 'dislike')">
+            <span class="comment-like-count">{{commentReactionCounts.get(comment.id)?.get('dislike') || 0}}</span>
+            <img [src]="funnyIconSrc" alt="Funny Icon" class="interaction-icon" (click)="addCommentReaction(comment.id, 'funny')">
+            <span class="comment-like-count">{{commentReactionCounts.get(comment.id)?.get('funny') || 0}}</span>
+            <img [src]="sadIconSrc" alt="Sad Icon" class="interaction-icon" (click)="addCommentReaction(comment.id, 'sad')">
+            <span class="comment-like-count">{{commentReactionCounts.get(comment.id)?.get('sad') || 0}}</span>
+            <img [src]="shockedIconSrc" alt="Shocked Icon" class="interaction-icon" (click)="addCommentReaction(comment.id, 'shocked')">
+            <span class="comment-like-count">{{commentReactionCounts.get(comment.id)?.get('shocked') || 0}}</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="add-comment-section">
+      <input type="text" class="comment-input" placeholder="Write your comment here" [(ngModel)]="newComment"/>
+      <button class="add-comment-button" (click)="addComment()">
+        <img [src]="addIconSrc" alt="Add Icon" class="add-icon">
+      </button>
+    </section>
   </main>
 </div>

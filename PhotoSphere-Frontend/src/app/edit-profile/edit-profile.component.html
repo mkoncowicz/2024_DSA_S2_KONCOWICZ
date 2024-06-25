@@ -6,32 +6,31 @@
     <section class="profile-header">
       <div class="profile-photo-container">
         <header class="profile-photo-header">
-          <div class="profile-photo-placeholder">
-            <p *ngIf="!selectedPhoto">Profile photo</p>
-            <img *ngIf="selectedPhoto" [src]="selectedPhoto" alt="Selected Photo" class="photo-preview">
+          <div *ngIf="!selectedPhoto" class="profile-photo-placeholder">
+            <img [src]="profileImageSrc" alt="Profile photo" class="photo-preview">
           </div>
+          <img *ngIf="selectedPhoto" [src]="selectedPhoto" alt="Selected Photo" class="photo-preview">
           <label class="upload-label" for="upload-photo">Choose new profile photo:</label>
           <input type="file" id="upload-photo" (change)="onFileSelected($event)" class="upload-input">
           <button class="upload-button" (click)="triggerFileInput()">UPLOAD PHOTO</button>
         </header>
       </div>
-
       <form class="profile-edit-form" #profileEditForm="ngForm" (ngSubmit)="onSave(profileEditForm)">
         <div class="form-group">
           <label for="firstName" class="label-name">First name</label>
-          <input type="text" id="firstName" [(ngModel)]="user.firstName" placeholder="first name" name="firstName" class="input-field" />
+          <input type="text" id="firstName" [(ngModel)]="authService.loggedUser.firstName" name="firstName" class="input-field" />
         </div>
         <div class="form-group">
           <label for="lastName" class="label-name">Last name</label>
-          <input type="text" id="lastName" [(ngModel)]="user.lastName" placeholder="last name"name="lastName" class="input-field" />
+          <input type="text" id="lastName" [(ngModel)]="authService.loggedUser.lastName" name="lastName" class="input-field" />
         </div>
         <div class="form-group">
           <label for="username" class="label-name">Username</label>
-          <input type="text" id="username" [(ngModel)]="user.username" placeholder="username"name="username" class="input-field" />
+          <input type="text" id="username" [(ngModel)]="authService.loggedUser.nickname" name="username" class="input-field" />
         </div>
         <div class="form-group">
           <label for="description" class="label-name">Profile description</label>
-          <textarea id="description" formControlName="description" placeholder="description" class="description-field"></textarea>
+          <input type="text" id="description" [(ngModel)]="authService.loggedUser.description" name="description" class="description-field" />
         </div>
       </form>
     </section>

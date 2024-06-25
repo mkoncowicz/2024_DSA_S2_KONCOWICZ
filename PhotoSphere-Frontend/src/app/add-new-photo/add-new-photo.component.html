@@ -6,47 +6,51 @@
     <section class="photo-header">
       <div class="new-photo-container">
         <header class="new-photo-header">
-          <div class="new-photo-placeholder" is="photo-placeholder">
-            <p *ngIf="!selectedPhoto">Choose a photo you want to upload</p>
-            <img *ngIf="selectedPhoto" [src]="selectedPhoto" alt="Selected Photo" class="photo-preview">
+          <div *ngIf="!selectedPhoto" class="new-photo-placeholder">
+            <p>Choose a photo you want to upload</p>
           </div>
-          <input type="file" id="upload-photo" (change)="onFileSelected($event)" class="upload-input">
+          <img *ngIf="selectedPhoto" [src]="selectedPhoto" alt="Selected Photo" class="photo-preview">
+          <input type="file" id="upload-photo" (change)="onFileSelected($event)" class="upload-input" required>
           <button class="upload-button" (click)="triggerFileInput()">UPLOAD PHOTO</button>
-          <label class="label-privacy">Do you want everyone to see your photo?</label>
         </header>
       </div>
-
       <form class="add-photo-form" #addPhotoForm="ngForm" (ngSubmit)="onCreatePost(addPhotoForm)">
         <div class="form-group">
           <label for="title" class="label-name">Title</label>
-          <input type="text" id="title" name="Title" class="input-field" />
+          <input type="text" [(ngModel)]="post.caption" id="title" name="Title" class="input-field" required />
         </div>
         <div class="form-group">
           <label for="description" class="label-name">Description</label>
-          <textarea id="description" name="description" class="description-field"></textarea>
+          <textarea id="description" [(ngModel)]="post.description" name="description" class="description-field" required></textarea>
         </div>
         <div class="form-group">
           <label for="category" class="label-name">Category</label>
-          <input type="text" id="category" name="category" class="input-field" />
+          <input list="categories" id="category" [(ngModel)]="post.category" name="category" class="input-field" required />
+          <datalist id="categories">
+            <option *ngFor="let category of categories" [value]="category"></option>
+          </datalist>
         </div>
         <div class="form-group">
           <label for="tags" class="label-name">Tags</label>
-          <input type="text" id="tags" name="tags" class="input-field" />
+          <input type="text" id="tags" [(ngModel)]="tagsInput" name="tags" class="input-field" required />
         </div>
         <div class="form-group visibility-options">
+          <label class="label-privacy">Do you want everyone to see your photo?</label>
           <div class="visibility-inputs">
             <label for="private" class="visibility-label">
-              <input type="checkbox" id="private" name="visibility" value="private" (change)="checkOnly($event)"/>
+              <input type="radio" id="private" [(ngModel)]="post.private" name="visibility" value="true"  />
               Private
             </label>
             <label for="public" class="visibility-label">
-              <input type="checkbox" id="public" name="visibility" value="public" (change)="checkOnly($event)"/>
+              <input type="radio" id="public" [(ngModel)]="post.private" name="visibility" value="false"  />
               Public
             </label>
           </div>
         </div>
+        <div class="button-container">
+          <button type="submit" class="create-button" [disabled]="!addPhotoForm.valid || !selectedPhoto">CREATE YOUR POST!</button>
+        </div>
       </form>
     </section>
-    <button type="submit" class="create-button" (click)="onCreatePost(addPhotoForm)">CREATE YOUR POST!</button>
   </main>
 </div>

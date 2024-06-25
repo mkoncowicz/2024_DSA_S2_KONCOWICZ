@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import org.example.photospherebackend.models.AppUser;
+import org.example.photospherebackend.models.Post;
 import org.example.photospherebackend.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class AppUserService {
 
     private final AppUserRepository appUserRepository;
     private final AmazonS3 amazonS3;
-    private final String bucketName = "photosphere-bucket";
+    private final String bucketName = "photo-test";
 
     @Autowired
     public AppUserService(AppUserRepository appUserRepository, AmazonS3 amazonS3) {
@@ -127,4 +128,15 @@ public class AppUserService {
             throw new RuntimeException("Failed to determine MIME type", e);
         }
     }
+
+    public Optional<Integer> getIdOfUser(String email) {
+        Optional<AppUser> optionaluser = appUserRepository.findByEmail(email);
+        if (optionaluser.isPresent()) {
+            AppUser user = optionaluser.get();
+            return Optional.of(user.getId().intValue());
+        } else {
+            throw new RuntimeException("Post not found");
+        }
+    }
+
 }
